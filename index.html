@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Microsoft Voice → MOP/SOP (V3.3, Copilot assist)</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <script src="https://alcdn.msauth.net/browser/2.38.0/js/msal-browser.min.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>ABM FieldOps - Procedures and MOP <span class="badge">Demo1</span></h1>
+    <p class="sub"></p>
+  </header>
+
+  <section class="card">
+    <div class="banner">
+      <div>
+        <b>Status:</b> <span id="status">OneDrive disconnected</span>
+        <span class="muted small" id="who"></span>
+      </div>
+      <div class="row gap">
+        <button id="btnConnect">Connect Microsoft</button>
+        <button id="btnDisconnect" disabled>Disconnect</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>1) Voice capture and transcript</h2>
+    <div class="row gap wrap">
+      <button id="btnStart">● Start</button>
+      <button id="btnStop" disabled>■ Stop</button>
+      <label class="inline"><input type="checkbox" id="chkContinuous" checked/> Continuous</label>
+      <label class="inline"><input type="checkbox" id="chkPunct" checked/> Smart punctuation</label>
+      <span id="srStatus" class="muted small"></span>
+    </div>
+    <textarea id="transcript" rows="8" placeholder="Speak or write…"></textarea>
+  </section>
+
+  <section class="card">
+    <h2>2) Structure MOP/SOP</h2>
+    <div class="row gap wrap">
+      <label>Type:
+        <select id="docType">
+          <option value="MOP">MOP</option>
+          <option value="SOP">SOP</option>
+        </select>
+      </label>
+      <button id="btnCopilot">Send to Copilot</button>
+    </div>
+
+    <div class="grid">
+      <div>
+        <h3>Copilot JSON</h3>
+        <textarea id="copilotIn" rows="8" placeholder="Paste the JSON answer from Copilot here, then click 'Apply Copilot JSON'"></textarea>
+        <button id="btnPasteJSON" type="button">Paste</button>
+        <button id="btnApplyCopilot">Apply Copilot JSON</button>
+      </div>
+      <div>
+        <h3>Preview</h3>
+        <div id="preview" class="preview"></div>
+        <div id="quality" class="muted small"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>3) Approvals, e-sign, audit</h2>
+    <div class="row gap wrap">
+      <input id="approverName" placeholder="Approver name"/>
+      <input id="approverEmail" placeholder="Approver email"/>
+      <button id="btnAddApprover">Add approver</button>
+    </div>
+    <ul id="approverList"></ul>
+    <h3>Signature</h3>
+    <canvas id="sig" width="560" height="160"></canvas>
+    <div class="row gap wrap">
+      <button id="btnClearSig">Clear</button>
+      <button id="btnSign">Sign</button>
+    </div>
+    <details>
+      <summary>Audit</summary>
+      <pre id="audit"></pre>
+    </details>
+  </section>
+
+  <section class="card">
+    <h2>4) Save / Export</h2>
+    <div class="row gap wrap">
+      <input id="fileName" placeholder="File name (auto from title)"/>
+      <button id="btnDownloadHTML">Download HTML</button>
+      <button id="btnDownloadJSON">Download JSON</button>
+      <button id="btnPrint">Print / Save as PDF</button>
+    </div>
+    <div class="row gap wrap" id="cloudRow" style="display:none">
+      <button id="btnSaveOneDrive">Save to OneDrive</button>
+      <button id="btnShare" title="Invite viewers/editors">Share</button>
+      <button id="btnVersions">List versions</button>
+    </div>
+    <div id="links" class="small muted"></div>
+  </section>
+
+  <footer>
+    <small>No third party libraries.</small>
+  </footer>
+</body>
+</html>
